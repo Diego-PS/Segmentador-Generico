@@ -1,4 +1,4 @@
-pimport codecs
+import codecs
 import pdfplumber
 
 arquivo = 'texto.txt'
