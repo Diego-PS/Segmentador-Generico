@@ -39,7 +39,7 @@ conteudo = ''
 saida = codecs.open("saida.txt", "w", "utf-8")
 
 for linha in linhas:
-
+    
     if linha in caixa_alta:
 
         caixa_alta[linha] -= 1
@@ -53,8 +53,8 @@ for linha in linhas:
 
         titulo += linha + '\n'
     else:
-        
-        if linha[:55] == "Documento assinado digitalmente em consonância com a MP":
+
+        if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo":
             if not conteudo:    
                 ultimo_segmento = segmentos.pop()
                 titulo, conteudo = ultimo_segmento.titulo, ultimo_segmento.conteudo
@@ -63,6 +63,7 @@ for linha in linhas:
                 continue
             else:
                 conteudo += linha + '\n'
+                
 
 for segmento in segmentos:
     saida.write('___________________________________________________________\n')
