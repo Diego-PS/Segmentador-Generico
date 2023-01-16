@@ -1,5 +1,6 @@
 import codecs
 import pdfplumber
+import re
 
 arquivo = 'texto.txt'
 texto = open(arquivo, encoding='utf-8').read()
@@ -54,7 +55,8 @@ for linha in linhas:
         titulo += linha + '\n'
     else:
 
-        if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo":
+        t = re.compile(r'.*Diário Oficial do Município[\d]+$')
+        if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo" or t.match(linha) != None:
             if not conteudo:    
                 ultimo_segmento = segmentos.pop()
                 titulo, conteudo = ultimo_segmento.titulo, ultimo_segmento.conteudo
