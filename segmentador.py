@@ -3,7 +3,7 @@ import pdfplumber
 import re
 import json
 
-arquivo = 'texto.txt'
+arquivo = 'colunamista.txt'
 texto = open(arquivo, encoding='utf-8').read()
 
 class Segmento:
@@ -38,7 +38,7 @@ segmentos = []
 titulo = ''
 conteudo = ''
 
-saida = codecs.open("colunamista.txt", "w", "utf-8")
+# saida = codecs.open("saida.txt", "w", "utf-8")
 
 t = re.compile(r'.*Diário Oficial do Município[\d]+$')
 
