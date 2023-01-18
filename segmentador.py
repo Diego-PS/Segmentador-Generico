@@ -1,6 +1,7 @@
 import codecs
 import pdfplumber
 import re
+import json
 
 arquivo = 'texto.txt'
 texto = open(arquivo, encoding='utf-8').read()
@@ -93,12 +94,12 @@ for linha in linhas:
                 conteudo += linha + '\n'
                 
 
-for segmento in segmentos:
+"""for segmento in segmentos:
     saida.write('___________________________________________________________\n')
     saida.write(segmento.titulo)
     saida.write('-----------------------------------------------------------\n')
     saida.write(segmento.conteudo)
-    saida.write('___________________________________________________________\n')
+    saida.write('___________________________________________________________\n')"""
 
 segmentos_dicts = []
 for segmento in segmentos:
@@ -121,3 +122,7 @@ document_dict = {
     "data" : data_string,
     "segmentos" : pref_bh_dict
 }
+
+json_object = json.dumps(document_dict, indent = 4, ensure_ascii=False)
+with codecs.open("saida.json", "w", "utf-8") as outfile: 
+    outfile.write(json_object)
