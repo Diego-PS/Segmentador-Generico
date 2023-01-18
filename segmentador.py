@@ -39,6 +39,8 @@ conteudo = ''
 
 saida = codecs.open("saida.txt", "w", "utf-8")
 
+t = re.compile(r'.*Diário Oficial do Município[\d]+$')
+
 for linha in linhas:
     
     if linha in caixa_alta:
@@ -55,7 +57,6 @@ for linha in linhas:
         titulo += linha + '\n'
     else:
 
-        t = re.compile(r'.*Diário Oficial do Município[\d]+$')
         if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo" or t.match(linha) != None:
             if not conteudo:    
                 ultimo_segmento = segmentos.pop()
