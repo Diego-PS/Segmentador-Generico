@@ -123,6 +123,5 @@ document_dict = {
     "segmentos" : pref_bh_dict
 }
 
-json_object = json.dumps(document_dict, indent = 4, ensure_ascii=False)
 with codecs.open("saida.json", "w", "utf-8") as outfile: 
-    outfile.write(json_object)
+    json.dump(document_dict, outfile, indent = 4, ensure_ascii=False)
