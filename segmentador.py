@@ -99,3 +99,25 @@ for segmento in segmentos:
     saida.write('-----------------------------------------------------------\n')
     saida.write(segmento.conteudo)
     saida.write('___________________________________________________________\n')
+
+segmentos_dicts = []
+for segmento in segmentos:
+    seg_dict = {
+        "materia" : segmento.conteudo,
+        "page" : "",
+        "publicador" : "",
+        "id" : "" 
+    }
+    segmentos_dicts.append(seg_dict)
+
+pref_bh_dict = {
+    "PREFEITURA DE BELO HORIZONTE" : segmentos_dicts
+}
+
+document_dict = {
+    "origem" : "diariobh.pdf",
+    "diario": "Diário Oficial de Belo Horizonte",
+    "numero" : numero,
+    "data" : data_string,
+    "segmentos" : pref_bh_dict
+}
