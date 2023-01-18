@@ -41,6 +41,31 @@ saida = codecs.open("saida.txt", "w", "utf-8")
 
 t = re.compile(r'.*Diário Oficial do Município[\d]+$')
 
+primeira_linha, segunda_linha = linhas[:2]
+linhas = linhas[2:]
+
+numeros = re.findall(r'[0-9]+', segunda_linha)
+
+meses = {
+    '1' : 'Janeiro',
+    '2' : 'Fevereiro',
+    '3' : 'Março',
+    '4' : 'Abril',
+    '5' : 'Maio',
+    '6' : 'Junho',
+    '7' : 'Julho',
+    '8' : 'Agosto',
+    '9' : 'Setembro',
+    '10' : 'Outubro',
+    '11' : 'Novembro',
+    '12' : 'Dezembro'
+}
+
+numero_lista = numeros[:-3]
+dia, mes, ano = numeros[-3:]
+data_string = f'{dia} de {meses[mes]} de {ano}'
+numero = ''.join(numero_lista)
+
 for linha in linhas:
     
     if linha in caixa_alta:
