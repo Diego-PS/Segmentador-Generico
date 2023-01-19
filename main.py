@@ -9,6 +9,8 @@ def main():
 
     args = parser.parse_args()
 
-    with pdf_args as getattr(args, 'pdf'):
-        if pdf_args is not None:
-            text.(pdf_args)
+    if getattr(args, 'pdf') is not None:
+        text.converterPDFtoTXT(getattr(args, 'pdf'))
+
+if __name__ == "__main__":
+    main()
