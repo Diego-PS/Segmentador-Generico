@@ -4,8 +4,12 @@ import re
 import json
 import text
 import os
+import time
 
 def segmentador (arquivo_pdf, dir_json):
+
+    start_time = time.time()
+    print("Processando arquivo '" + arquivo_pdf + "'")
 
     if not os.path.exists(dir_json):
         os.makedirs(dir_json)
@@ -125,3 +129,6 @@ def segmentador (arquivo_pdf, dir_json):
     json_file_name = dir_json + arquivo_pdf[:-4] + '.json'
     with codecs.open(json_file_name, "w", "utf-8") as outfile: 
         json.dump(document_dict, outfile, indent = 4, ensure_ascii=False)
+    print("Processado - %.2f segundos" % (time.time() - start_time))
+
+segmentador('diariobh.pdf','JSON')
