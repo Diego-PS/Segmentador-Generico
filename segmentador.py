@@ -130,5 +130,3 @@ def segmentador (arquivo_pdf, dir_json):
     with codecs.open(json_file_name, "w", "utf-8") as outfile: 
         json.dump(document_dict, outfile, indent = 4, ensure_ascii=False)
     print("Processado - %.2f segundos" % (time.time() - start_time))
-
-segmentador('diariobh.pdf','JSON')
