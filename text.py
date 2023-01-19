@@ -1,8 +1,10 @@
 import codecs
 import PyPDF2
+import os
 
 def converterPDFtoTXT(file):
 
+    os.mkdir('./Textos')
     pdf = open(file,'rb')
  
     leitor_pdf = PyPDF2.PdfReader(pdf)
@@ -15,4 +17,4 @@ def converterPDFtoTXT(file):
     saida.write(texto)
 
 
-converterPDFtoTXT("diariobh.pdf")
+#converterPDFtoTXT("diariobh.pdf")
