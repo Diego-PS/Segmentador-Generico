@@ -1,5 +1,5 @@
 import argparse
-import text
+import segmentador
 
 def main():
 
@@ -10,7 +10,7 @@ def main():
     args = parser.parse_args()
 
     if getattr(args, 'pdf') is not None:
-        text.converterPDFtoTXT(getattr(args, 'pdf'))
+        segmentador.segmentador(getattr(args, 'pdf'), './JSON/')
 
 if __name__ == "__main__":
     main()
