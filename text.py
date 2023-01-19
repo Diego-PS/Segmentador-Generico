@@ -11,5 +11,8 @@ def converterPDFtoTXT(file):
     for page in leitor_pdf.pages:
         texto += page.extract_text()
 
-    saida = codecs.open(file[:len(file)-4] + ".txt", "w", "utf-8")
+    saida = codecs.open("./Textos/"+ file[:len(file)-4] + ".txt", "w", "utf-8")
     saida.write(texto)
+
+
+converterPDFtoTXT("diariobh.pdf")
