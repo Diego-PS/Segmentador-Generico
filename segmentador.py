@@ -3,7 +3,7 @@ import pdfplumber
 import re
 import json
 
-arquivo = 'texto.txt'
+arquivo = 'colunamista.txt'
 texto = open(arquivo, encoding='utf-8').read()
 
 class Segmento:
@@ -11,7 +11,7 @@ class Segmento:
         self.titulo = titulo
         self.conteudo = conteudo
 
-pdf = pdfplumber.open('diariobh.pdf')
+pdf = pdfplumber.open('colunamista.pdf')
 linhas_em_negrito = dict()
 lista_linhas_em_negrito = []
 
@@ -38,7 +38,7 @@ segmentos = []
 titulo = ''
 conteudo = ''
 
-saida = codecs.open("saida.txt", "w", "utf-8")
+# saida = codecs.open("saida.txt", "w", "utf-8")
 
 t = re.compile(r'.*Diário Oficial do Município[\d]+$')
 
@@ -123,5 +123,5 @@ document_dict = {
     "segmentos" : pref_bh_dict
 }
 
-with codecs.open("saida.json", "w", "utf-8") as outfile: 
+with codecs.open("colunamista.json", "w", "utf-8") as outfile: 
     json.dump(document_dict, outfile, indent = 4, ensure_ascii=False)
