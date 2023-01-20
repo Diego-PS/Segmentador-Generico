@@ -5,6 +5,7 @@ import json
 import text
 import os
 import time
+import sys
 
 def segmentadorDir (dir_pdf, dir_json):
 
@@ -13,10 +14,10 @@ def segmentadorDir (dir_pdf, dir_json):
         print(f"Por favor, informar o caminho completo com a entrada dos dados: {sys.argv[0]} --dir <caminho>")
         exit(2)
 
-    if not os.path.exists(dir_json):
-        print(f"Caminho não existe: '{dir_json}'.")
-        print(f"Por favor, informar o caminho completo para a saída dos dados: {sys.argv[0]} -o <caminho>")
-        exit(2)
+    # if not os.path.exists(dir_json):
+    #     print(f"Caminho não existe: '{dir_json}'.")
+    #     print(f"Por favor, informar o caminho completo para a saída dos dados: {sys.argv[0]} -o <caminho>")
+    #     exit(2)
 
     arquivos = os.listdir(dir_pdf)
     for arquivo in arquivos:
@@ -143,7 +144,7 @@ def segmentador (arquivo_pdf, dir_json):
     }
 
     os.remove(arquivo_txt)
-    json_file_name = dir_json + arquivo_pdf[:-4] + '.json'
+    json_file_name = dir_json + arquivo_pdf.split('/')[-1][:-4] + '.json'
     with codecs.open(json_file_name, "w", "utf-8") as outfile: 
         json.dump(document_dict, outfile, indent = 4, ensure_ascii=False)
     print("Processado - %.2f segundos" % (time.time() - start_time))
