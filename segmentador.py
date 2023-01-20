@@ -22,7 +22,7 @@ def segmentadorDir (dir_pdf, dir_json):
     arquivos = os.listdir(dir_pdf)
     for arquivo in arquivos:
         if arquivo.endswith('.pdf'):
-            segmentador(arquivo, dir_json)
+            segmentador(dir_pdf + arquivo, dir_json)
 
 def segmentador (arquivo_pdf, dir_json):
 
@@ -90,10 +90,14 @@ def segmentador (arquivo_pdf, dir_json):
         '12' : 'Dezembro'
     }
 
-    numero_lista = numeros[:-3]
-    dia, mes, ano = numeros[-3:]
-    data_string = f'{dia} de {meses[mes]} de {ano}'
-    numero = ''.join(numero_lista)
+    try:
+        numero_lista = numeros[:-3]
+        dia, mes, ano = numeros[-3:]
+        data_string = f'{dia} de {meses[mes]} de {ano}'
+        numero = ''.join(numero_lista)
+    except:
+        numero = 'ERROR'
+        data_string = 'ERROR'
 
     for linha in linhas:
         
