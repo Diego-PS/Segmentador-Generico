@@ -21,7 +21,7 @@ def segmentadorDir (dir_pdf, dir_json):
     arquivos = os.listdir(dir_pdf)
     for arquivo in arquivos:
         if arquivo.endswith('.pdf'):
-            segmantador(arquivo, dir_json)
+            segmentador(arquivo, dir_json)
 
 def segmentador (arquivo_pdf, dir_json):
 
