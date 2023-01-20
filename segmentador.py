@@ -6,6 +6,23 @@ import text
 import os
 import time
 
+def segmentadorDir (dir_pdf, dir_json):
+
+    if not os.path.exists(dir_pdf):
+        print(f"Caminho não existe: '{dir_pdf}'.")
+        print(f"Por favor, informar o caminho completo com a entrada dos dados: {sys.argv[0]} --dir <caminho>")
+        exit(2)
+
+    if not os.path.exists(dir_json):
+        print(f"Caminho não existe: '{dir_json}'.")
+        print(f"Por favor, informar o caminho completo para a saída dos dados: {sys.argv[0]} -o <caminho>")
+        exit(2)
+
+    arquivos = os.listdir(dir_pdf)
+    for arquivo in arquivos:
+        if arquivo.endswith('.pdf'):
+            segmantador(arquivo, dir_json)
+
 def segmentador (arquivo_pdf, dir_json):
 
     start_time = time.time()
@@ -106,7 +123,7 @@ def segmentador (arquivo_pdf, dir_json):
     segmentos_dicts = []
     for segmento in segmentos:
         seg_dict = {
-            "materia" : segmento.conteudo,
+            "materia" : segmento.titulo + segmento.conteudo,
             "page" : "",
             "publicador" : "",
             "id" : "" 
