@@ -99,6 +99,8 @@ def segmentador (arquivo_pdf, dir_json):
         numero = 'ERROR'
         data_string = 'ERROR'
 
+    data_flag = False
+
     for linha in linhas:
         
         if linha in caixa_alta:
@@ -116,6 +118,15 @@ def segmentador (arquivo_pdf, dir_json):
         else:
 
             if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo" or t.match(linha) != None:
+                if t.match(linha) != None and data_flag == False:
+                    date = linha.split()
+                    data_string = ""
+                    date[3] = date[3].title()
+                    for i in range (1, 6):
+                        data_string += date[i]
+                        if i < 5:
+                            data_string += " "
+                    data_flag = True
                 if not conteudo:    
                     ultimo_segmento = segmentos.pop()
                     titulo, conteudo = ultimo_segmento.titulo, ultimo_segmento.conteudo
