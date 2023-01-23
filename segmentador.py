@@ -68,7 +68,7 @@ def segmentador (arquivo_pdf, dir_json):
     titulo = ''
     conteudo = ''
 
-    t = re.compile(r'.*Diário Oficial do Município[\d]+$')
+    t = re.compile(r'.*Diário Oficial do Município[\s]?[\d]+[Poder Executivo]{0,15}')
 
     primeira_linha, segunda_linha = linhas[:2]
     linhas = linhas[2:]
