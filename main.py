@@ -14,7 +14,7 @@ def main():
         dir_output += "/"
 
     if getattr(args, 'pdf') is not None:
-        segmentador.segmentador(getattr(args, 'pdf'), './MPMG_segmentos/')
+        segmentador.segmentador(getattr(args, 'pdf'), dir_output)
     else:
         dir_input = getattr(args, "dir")
         if dir_input[-1] != "/":
