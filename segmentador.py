@@ -24,7 +24,7 @@ class Segmento:
         self.titulo = titulo
         self.conteudo = conteudo
 
-def converterParaDict (segmentos, numero, data_string):
+def converterParaDict (segmentos, numero, data_string, arquivo_pdf):
     
     segmentos_dicts = []
     
@@ -42,7 +42,7 @@ def converterParaDict (segmentos, numero, data_string):
     }
 
     document_dict = {
-        "origem" : "diariobh.pdf",
+        "origem" : arquivo_pdf,
         "diario": "Diário Oficial de Belo Horizonte",
         "numero" : numero,
         "data" : data_string,
@@ -154,7 +154,7 @@ def segmentador (arquivo_pdf, dir_json):
                 else:
                     conteudo += linha + '\n'
 
-    document_dict = converterParaDict(segmentos, numero, data_string)
+    document_dict = converterParaDict(segmentos, numero, data_string, arquivo_pdf)
 
     os.remove(arquivo_txt)
     json_file_name = dir_json + arquivo_pdf.split('/')[-1][:-4] + '.json'
