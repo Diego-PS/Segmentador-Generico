@@ -74,7 +74,7 @@ def segmentador (arquivo_pdf, dir_json):
     caixa_alta = set()
     caixa_baixa = set()
     for linha in lista_linhas_em_negrito:
-        if linha.isupper():
+        if ''.join(linha.split('º')).isupper():
             caixa_alta.add(linha)
         else:
             caixa_baixa.add(linha)
