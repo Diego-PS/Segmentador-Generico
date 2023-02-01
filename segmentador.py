@@ -141,7 +141,7 @@ def segmentador (arquivo_pdf, dir_json):
                 if PDF_number_formula.match(linha) != None:
                     PDF_number_extractor = linha.split()
                     PDF_number_extractor.index("N.")
-                    numero = PDF_number_extractor[PDF_number_extractor.index("N.") + 1]
+                    numero = PDF_number_extractor[PDF_number_extractor.index("N.") + 1].translate(str.maketrans('', '','.'))
                     number_flag = True
             if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo" or regex_formula.match(linha) != None:
                 if regex_formula.match(linha) != None and data_flag == False:
