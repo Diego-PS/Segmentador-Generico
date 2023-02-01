@@ -92,6 +92,8 @@ def segmentador (arquivo_pdf, dir_json):
 
     regex_formula = re.compile(r'.*Diário Oficial do Município[\s]?[\d]+[Poder Executivo]{0,15}')
 
+    PDF_number_formula = re.compile(r'.*DOM Ano [LXVI]{2,4} . N\. [\d]\.[\d]{3}.*')
+
     primeira_linha, segunda_linha = linhas[:2]
     linhas = linhas[2:]
 
@@ -122,6 +124,7 @@ def segmentador (arquivo_pdf, dir_json):
         data_string = 'ERROR'
 
     data_flag = False
+    number_flag = False
 
     for linha in linhas:
         
@@ -134,7 +137,12 @@ def segmentador (arquivo_pdf, dir_json):
 
             titulo += linha + '\n'
         else:
-
+            if number_flag == False:
+                if PDF_number_formula.match(linha) != None:
+                    PDF_number_extractor = linha.split()
+                    PDF_number_extractor.index("N.")
+                    numero = PDF_number_extractor[PDF_number_extractor.index("N.") + 1]
+                    number_flag = True
             if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo" or regex_formula.match(linha) != None:
                 if regex_formula.match(linha) != None and data_flag == False:
                     date = linha.split()
