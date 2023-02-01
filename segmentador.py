@@ -92,7 +92,7 @@ def segmentador (arquivo_pdf, dir_json):
 
     regex_formula = re.compile(r'.*Diário Oficial do Município[\s]?[\d]+[Poder Executivo]{0,15}')
 
-    PDF_number_formula = re.compile(r'.*DOM Ano [LXVI]{2,4} . N\. [\d]\.[\d]{3}.*')
+    PDF_number_formula = re.compile(r'.*DOM Ano [LXVI]{2,6} . N\. [\d]\.[\d]{3}.*')
 
     primeira_linha, segunda_linha = linhas[:2]
     linhas = linhas[2:]
