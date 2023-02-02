@@ -12,8 +12,8 @@ def converterPDFtoTXT(file):
         texto += page.extract_text()
     
     txt_file_name = file[:len(file)-4] + ".txt"
-    saida = codecs.open(txt_file_name, "w", "utf-8")
-    saida.write(texto)
+    #saida = codecs.open(txt_file_name, "w", "utf-8")
+    #saida.write(texto)
 
     iniciadoresNegrito = [
 'GABINETE DO PREFEITO',
@@ -66,7 +66,7 @@ def converterPDFtoTXT(file):
 'URBEL'
 ]
     
-    buffer = open(txt_file_name, "r", encoding="utf-8")
+    #buffer = open(txt_file_name, "r", encoding="utf-8")
     saida = open(txt_file_name, "w", encoding="utf-8")
     for iniciadorNegrito in iniciadoresNegrito:
         if iniciadorNegrito in texto:
