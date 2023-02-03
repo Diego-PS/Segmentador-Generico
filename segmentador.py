@@ -128,13 +128,12 @@ def segmentador (arquivo_pdf, dir_json):
 
     data_flag = False
     number_flag = False
-    page_number = int()
+    page_number = "1"
 
     for linha in linhas:
 
         if page_number_formula.match(linha) != None:
-            page_number = linha[len(linha) - 2]
-            page_number += linha[len(linha) - 1]
+            page_number = linha[len(linha) - 2 :]
             if int(page_number) < 10:
                 page_number = page_number[1]
 
@@ -152,7 +151,7 @@ def segmentador (arquivo_pdf, dir_json):
                     PDF_number_extractor = linha.split()
                     numero = PDF_number_extractor[PDF_number_extractor.index("N.") + 1].translate(str.maketrans('', '','.'))
                     number_flag = True
-            if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo" or regex_formula.match(linha) != None:
+            if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo":
                 if regex_formula.match(linha) != None and data_flag == False:
                     date = linha.split()
                     data_string = ""
@@ -165,6 +164,11 @@ def segmentador (arquivo_pdf, dir_json):
                 if not conteudo:    
                     ultimo_segmento = segmentos.pop()
                     titulo, conteudo = ultimo_segmento.titulo, ultimo_segmento.conteudo
+            if regex_formula.match(linha) != None or page_number_formula.match(linha) != None:
+                if not conteudo:    
+                    ultimo_segmento = segmentos.pop()
+                    titulo, conteudo = ultimo_segmento.titulo, ultimo_segmento.conteudo
+
             else:
                 if linha[:19] == "Hash da assinatura:":
                     continue
