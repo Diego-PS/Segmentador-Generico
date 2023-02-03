@@ -8,8 +8,12 @@ def converterPDFtoTXT(file):
     leitor_pdf = PyPDF2.PdfReader(pdf)
  
     texto = ''
+    numero_da_pagina = 1
+
     for page in leitor_pdf.pages:
+        texto += "\nPage number: " + str(numero_da_pagina) + '\n'
         texto += page.extract_text()
+        numero_da_pagina += 1
     
     txt_file_name = file[:len(file)-4] + ".txt"
     #saida = codecs.open(txt_file_name, "w", "utf-8")

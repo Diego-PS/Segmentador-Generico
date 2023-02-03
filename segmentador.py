@@ -20,9 +20,10 @@ def segmentadorDir (dir_pdf, dir_json):
             segmentador(dir_pdf + arquivo, dir_json)
 
 class Segmento:
-    def __init__(self, titulo, conteudo):
+    def __init__(self, titulo, conteudo, numero_da_pagina = ""):
         self.titulo = titulo
         self.conteudo = conteudo
+        self.numero_da_pagina = numero_da_pagina
 
 def converterParaDict (segmentos, numero, data_string, arquivo_pdf):
     
@@ -31,7 +32,7 @@ def converterParaDict (segmentos, numero, data_string, arquivo_pdf):
     for segmento in segmentos:
         seg_dict = {
             "materia" : segmento.titulo + segmento.conteudo,
-            "page" : "",
+            "page" : segmento.numero_da_pagina,
             "publicador" : "",
             "id" : "" 
         }
@@ -94,6 +95,8 @@ def segmentador (arquivo_pdf, dir_json):
 
     PDF_number_formula = re.compile(r'.*DOM Ano [LXVI]{2,6} . N\. [\d]\.[\d]{3}.*')
 
+    page_number_formula = re.compile(r'Page number: [\d]*')
+
     primeira_linha, segunda_linha = linhas[:2]
     linhas = linhas[2:]
 
@@ -125,13 +128,20 @@ def segmentador (arquivo_pdf, dir_json):
 
     data_flag = False
     number_flag = False
+    page_number = int()
 
     for linha in linhas:
-        
+
+        if page_number_formula.match(linha) != None:
+            page_number = linha[len(linha) - 2]
+            page_number += linha[len(linha) - 1]
+            if int(page_number) < 10:
+                page_number = page_number[1]
+
         if linha in caixa_alta:
 
             if titulo and conteudo:
-                segmentos.append(Segmento(titulo, conteudo))
+                segmentos.append(Segmento(titulo, conteudo, page_number))
                 titulo = ''
                 conteudo = ''
 
