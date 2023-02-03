@@ -20,10 +20,11 @@ def segmentadorDir (dir_pdf, dir_json):
             segmentador(dir_pdf + arquivo, dir_json)
 
 class Segmento:
-    def __init__(self, titulo, conteudo, numero_da_pagina = ""):
+    def __init__(self, titulo, conteudo, numero_da_pagina = "", publicador = ""):
         self.titulo = titulo
         self.conteudo = conteudo
         self.numero_da_pagina = numero_da_pagina
+        self.publicador = publicador
 
 def converterParaDict (segmentos, numero, data_string, arquivo_pdf):
     
@@ -33,7 +34,7 @@ def converterParaDict (segmentos, numero, data_string, arquivo_pdf):
         seg_dict = {
             "materia" : segmento.titulo + segmento.conteudo,
             "page" : segmento.numero_da_pagina,
-            "publicador" : "",
+            "publicador" : segmento.publicador,
             "id" : "" 
         }
         segmentos_dicts.append(seg_dict)
@@ -88,9 +89,6 @@ def segmentador (arquivo_pdf, dir_json):
 
     segmentos = []
 
-    titulo = ''
-    conteudo = ''
-
     regex_formula = re.compile(r'.*Diário Oficial do Município[\s]?[\d]+[Poder Executivo]{0,15}')
 
     PDF_number_formula = re.compile(r'.*DOM Ano [LXVI]{2,6} . N\. [\d]\.[\d]{3}.*')
@@ -128,7 +126,11 @@ def segmentador (arquivo_pdf, dir_json):
 
     data_flag = False
     number_flag = False
-    page_number = "1"
+    titulo = ''
+    conteudo = ''
+    page_number = '1'
+    publicador = ''
+    linha_anterior = ''
 
     for linha in linhas:
 
@@ -140,11 +142,17 @@ def segmentador (arquivo_pdf, dir_json):
         if linha in caixa_alta:
 
             if titulo and conteudo:
-                segmentos.append(Segmento(titulo, conteudo, page_number))
+                segmentos.append(Segmento(titulo, conteudo, page_number, publicador))
                 titulo = ''
                 conteudo = ''
+                publicador = ''
 
             titulo += linha + '\n'
+        
+        elif linha in caixa_baixa:
+
+            publicador += linha_anterior + '\n'
+
         else:
             if number_flag == False:
                 if PDF_number_formula.match(linha) != None:
@@ -163,17 +171,19 @@ def segmentador (arquivo_pdf, dir_json):
                     data_flag = True
                 if not conteudo:    
                     ultimo_segmento = segmentos.pop()
-                    titulo, conteudo = ultimo_segmento.titulo, ultimo_segmento.conteudo
+                    titulo, conteudo, page_number, publicador = ultimo_segmento.titulo, ultimo_segmento.conteudo, ultimo_segmento.numero_da_pagina, ultimo_segmento.publicador
             if regex_formula.match(linha) != None or page_number_formula.match(linha) != None:
                 if not conteudo:    
                     ultimo_segmento = segmentos.pop()
-                    titulo, conteudo = ultimo_segmento.titulo, ultimo_segmento.conteudo
+                    titulo, conteudo, page_number, publicador = ultimo_segmento.titulo, ultimo_segmento.conteudo, ultimo_segmento.numero_da_pagina, ultimo_segmento.publicador
 
             else:
                 if linha[:19] == "Hash da assinatura:":
                     continue
                 else:
                     conteudo += linha + '\n'
+
+        linha_anterior = linha
 
     document_dict = converterParaDict(segmentos, numero, data_string, arquivo_pdf)
 
