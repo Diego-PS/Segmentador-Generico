@@ -75,6 +75,7 @@ def segmentador (arquivo_pdf, dir_json):
 
     caixa_alta = set()
     caixa_baixa = set()
+
     for linha in lista_linhas_em_negrito:
         if ''.join(linha.split('º')).isupper():
             caixa_alta.add(linha)
@@ -95,10 +96,10 @@ def segmentador (arquivo_pdf, dir_json):
 
     page_number_formula = re.compile(r'Page number: [\d]*')
 
-    primeira_linha, segunda_linha, terceira_linha = linhas[:3]
+    primeira_linha, segunda_linha = linhas[:2]
     linhas = linhas[2:]
 
-    numeros = re.findall(r'[0-9]+', terceira_linha)
+    numeros = re.findall(r'[0-9]+', segunda_linha)
 
     meses = {
         '1' : 'Janeiro',

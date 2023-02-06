@@ -101,7 +101,8 @@ def converterPDFtoTXT(file):
 'SUDECAP',
 'COMPUR',
 'COMUSA',
-'URBEL'
+'URBEL',
+'BELO HORIZONTE\n'
 ]
     
     #buffer = open(txt_file_name, "r", encoding="utf-8")
