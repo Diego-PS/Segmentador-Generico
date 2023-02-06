@@ -67,7 +67,41 @@ def segmentador (arquivo_pdf, dir_json):
 
     pdf = pdfplumber.open(arquivo_pdf)
     linhas_em_negrito = dict()
-    lista_linhas_em_negrito = []
+    lista_linhas_em_negrito = [
+    'HOMOLOGAÇÃO',
+    'RENOVAÇÃO DO REGISTRO',
+    'ADJUDICAÇÃO', 
+    'REGISTRO CADASTRAL – SUCAF',    
+    'EXTRATO',
+    'EXTRATOS',
+    'EDITAL DE CIÊNCIA DE ELIMINAÇÃO',
+    'RETIFICAÇÕES',
+    'TORNAR SEM EFEITO',
+    'TERMO DE APOSTILA',
+    'RENOVAÇÃO DO REGISTRO CADASTRAL',
+    'COMUNICADO',
+    'EDITAL AUTOS EMITIDOS PELA',
+    'JUNTA INTEGRADA DE',
+    'PAUTA DE JULGAMENTO',
+    'COMUNICADO DE',
+    'ATO DO SECRETÁRIO',
+    'ABERTURA DE LICITAÇÃO',
+    'PROCESSO SELETIVO SIMPLIFICADO',
+    'RESULTADO FINAL - HOMOLOGAÇÃO',
+    'RECURSOS NÃO JULGADOS',
+    'RETIRADOS DE PAUTA',
+    'CONVOCAÇÃO PARA POSSE',
+    'ATA DA SESSÃO PÚBLICA',
+    'DESPACHOS DO SECRETÁRIO',
+    'NOTIFICAÇÃO',
+    'DISTRATO DE CONTRATO',
+    'TERMO DE CONVALIDAÇÃO',
+    'EXTRATOS DE CONTRATOS',
+    'EXTRATOS DE TERMOS',
+    'ADITIVOS DE CONTRATOS',
+    'CONVOCAÇÃO PARA',
+    'ATOS DO PREFEITO'
+    ]
 
     for page in pdf.pages:
         clean_text = page.filter(lambda obj: obj['object_type'] == 'char' and 'Bold' in obj['fontname'])
