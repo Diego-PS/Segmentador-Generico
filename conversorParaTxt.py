@@ -10,15 +10,16 @@ def converterPDFtoTXT(file):
     texto = ''
     numero_da_pagina = 1
 
+    #Adicionamos em cada página o número da página, para ser inserido no campo correto durante a segmentação
+    #e passamos o conteúdo extraído do PDF para uma variável
     for page in leitor_pdf.pages:
         texto += "\nPage number: " + str(numero_da_pagina) + '\n'
         texto += page.extract_text()
         numero_da_pagina += 1
     
     txt_file_name = file[:len(file)-4] + ".txt"
-    #saida = codecs.open(txt_file_name, "w", "utf-8")
-    #saida.write(texto)
 
+    #Lista dos Iniciadores em caixa cinza que aparecem incorretamente em alguns DOs
     iniciadoresNegrito = [
 'GABINETE DO PREFEITO',
 'SECRETARIA MUNICIPAL \nDE GOVERNO',
@@ -105,7 +106,8 @@ def converterPDFtoTXT(file):
 'BELO HORIZONTE\n'
 ]
     
-    #buffer = open(txt_file_name, "r", encoding="utf-8")
+    #Imprimimos o conteúdo do buffer no arquivo .txt, retirando os títulos em caixa cinza que aparecem
+    #incorretamente durante o texto
     saida = open(txt_file_name, "w", encoding="utf-8")
     for iniciadorNegrito in iniciadoresNegrito:
         if iniciadorNegrito in texto:

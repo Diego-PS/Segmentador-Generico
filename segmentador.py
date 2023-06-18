@@ -124,10 +124,13 @@ def segmentador (arquivo_pdf, dir_json):
 
     segmentos = []
 
+    #Regex para capturar a data do PDF
     regex_formula = re.compile(r'.*Diário Oficial do Município[\s]?[\d]+[Poder Executivo]{0,15}')
 
+    #Regex para capturar o número do PDF 
     PDF_number_formula = re.compile(r'.*DOM Ano [LXVI]{2,6} . N\. [\d]\.[\d]{3}.*')
 
+    #Regex para capturar o número da página
     page_number_formula = re.compile(r'Page number: [\d]*')
 
     primeira_linha, segunda_linha = linhas[:2]
@@ -151,6 +154,8 @@ def segmentador (arquivo_pdf, dir_json):
     }
 
     try:
+        #Transformamos a data na forma dia/mês/ano em dia de mês de ano, substituindo seus valores
+        #Também capturamos o número do PDF e o formatamos corretamente
         numero_lista = numeros[:-3]
         dia, mes, ano = numeros[-3:]
         data_string = f'{dia} de {meses[mes]} de {ano}'
@@ -169,6 +174,7 @@ def segmentador (arquivo_pdf, dir_json):
 
     for linha in linhas:
 
+        #Capturamos o número da página em que o segmento está
         if page_number_formula.match(linha) != None:
             page_number = linha[len(linha) - 2 :]
             if int(page_number) < 10:
@@ -190,11 +196,13 @@ def segmentador (arquivo_pdf, dir_json):
 
         else:
             if number_flag == False:
+                #Capturamos o número do PDF usando Regex
                 if PDF_number_formula.match(linha) != None:
                     PDF_number_extractor = linha.split()
                     numero = PDF_number_extractor[PDF_number_extractor.index("N.") + 1].translate(str.maketrans('', '','.'))
                     number_flag = True
             if linha[:55] == "Documento assinado digitalmente em consonância com a MP" or linha[:18] == "Poder Executivo" or regex_formula.match(linha) != None or page_number_formula.match(linha) != None:
+                #Capturamos a data do PDF usando Regex
                 if regex_formula.match(linha) != None and data_flag == False:
                     date = linha.split()
                     data_string = ""
