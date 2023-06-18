@@ -40,12 +40,12 @@ def converterParaDict (segmentos, numero, data_string, arquivo_pdf):
         segmentos_dicts.append(seg_dict)
 
     pref_bh_dict = {
-        "PREFEITURA DE BELO HORIZONTE" : segmentos_dicts
+        "Matérias" : segmentos_dicts
     }
 
     document_dict = {
         "origem" : arquivo_pdf,
-        "diario": "Diário Oficial de Belo Horizonte",
+        "diario": f"Diário Oficial do Município",
         "numero" : numero,
         "data" : data_string,
         "segmentos" : pref_bh_dict
@@ -204,7 +204,7 @@ def segmentador (arquivo_pdf, dir_json):
                         if i < 5:
                             data_string += " "
                     data_flag = True
-                if not conteudo:    
+                if not conteudo and len(segmentos) > 0:
                     ultimo_segmento = segmentos.pop()
                     titulo, conteudo, page_number, publicador = ultimo_segmento.titulo, ultimo_segmento.conteudo, ultimo_segmento.numero_da_pagina, ultimo_segmento.publicador
             else:
@@ -215,6 +215,8 @@ def segmentador (arquivo_pdf, dir_json):
 
         linha_anterior = linha
 
+    if len(segmentos) == 0:
+        segmentos.append(Segmento('', '\n'.join(linhas[:-1]), '', ''))
     document_dict = converterParaDict(segmentos, numero, data_string, arquivo_pdf)
 
     os.remove(arquivo_txt)
